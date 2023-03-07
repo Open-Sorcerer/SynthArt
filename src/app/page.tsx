@@ -14,6 +14,7 @@ import styles from "./page.module.css";
 
 import { usePrepareContractWrite, useAccount, useContractWrite } from "wagmi";
 import ABI from "../contracts/ABI.json";
+import { useState } from "react";
 
 const contractAddress = "0xA4CCEb9e84b9682ca559AA41DB57f4BECe586dc5";
 
@@ -31,15 +32,32 @@ export default function Home() {
 
   const contractWrite = useContractWrite(prepareContractWrite.config);
 
-  const handleSendTransation = () => {
+  const handleSendTransaction = () => {
     contractWrite.write?.();
   };
 
+
+  const [name, setName] = useState<string | null>('');
+  const [desc, setDesc] = useState<string | null>('');
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-          <button onClick={handleSendTransation}>Mint</button>
-      </div>
+    <main className='w-full h-full flex flex-col justify-between items-center p-10'>
+      <form className='w-full h-full flex flex-col gap-5 bg-white/10 md:w-1/2 p-10 rounded-md'>
+        <input
+          className='p-3 rounded-full mt-0 text-gray-800 shadow-sm placeholder:text-gray-500 placeholder:dark:text-gray-200 dark:text-white'
+          id="name"
+          name="name"
+          placeholder="Name"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          className='p-3 rounded-full mt-0 text-gray-800 shadow-sm placeholder:text-gray-500 placeholder:dark:text-gray-200 dark:text-white'
+          id="desc"
+          name="desc"
+          placeholder="Description"
+          onChange={(e) => setDesc(e.target.value)}
+        />
+        <button onClick={handleSendTransaction}>Mint</button>
+      </form>
     </main>
   );
 }
