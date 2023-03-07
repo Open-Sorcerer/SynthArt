@@ -8,16 +8,6 @@ import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { publicProvider } from "wagmi/providers/public";
 import styles from './page.module.css';
 
-// Choose which chains you'd like to show
-const chains = [fantom, fantomTestnet];
-
-const client = createClient(
-  getDefaultClient({
-    chains,
-    appName: "Your App Name"
-  }),
-);
-
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -25,11 +15,7 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.description}>
         <div>
-          <WagmiConfig client={client}>
-            <ConnectKitProvider>
-              <ConnectKitButton />
-            </ConnectKitProvider>
-          </WagmiConfig>
+          
         </div>
       </div>
     </main>
