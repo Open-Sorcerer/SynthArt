@@ -1,37 +1,45 @@
-'use client';
-import { ConnectKitButton, ConnectKitProvider, getDefaultClient } from "connectkit";
-import { Inter } from 'next/font/google';
-import Image from 'next/image';
+"use client";
+import {
+  ConnectKitButton,
+  ConnectKitProvider,
+  getDefaultClient,
+} from "connectkit";
+import { Inter } from "next/font/google";
+import Image from "next/image";
 import { WagmiConfig, configureChains, createClient } from "wagmi";
 import { fantom, fantomTestnet } from "wagmi/chains";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { publicProvider } from "wagmi/providers/public";
-import styles from './page.module.css';
+import styles from "./page.module.css";
 
-// Choose which chains you'd like to show
-const chains = [fantom, fantomTestnet];
+import { usePrepareContractWrite, useAccount, useContractWrite } from "wagmi";
+import ABI from "../contracts/ABI.json";
 
-const client = createClient(
-  getDefaultClient({
-    chains,
-    appName: "Your App Name"
-  }),
-);
+const contractAddress = "0xA4CCEb9e84b9682ca559AA41DB57f4BECe586dc5";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const { address } = useAccount();
+
+  const prepareContractWrite = usePrepareContractWrite({
+    address: contractAddress,
+    abi: ABI,
+    functionName: "safeMint",
+    args: [address, "METADATA_URL"],
+  });
+
+  const contractWrite = useContractWrite(prepareContractWrite.config);
+
+  const handleSendTransation = () => {
+    contractWrite.write?.();
+  };
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <div>
-          <WagmiConfig client={client}>
-            <ConnectKitProvider>
-              <ConnectKitButton />
-            </ConnectKitProvider>
-          </WagmiConfig>
-        </div>
+          <button onClick={handleSendTransation}>Mint</button>
       </div>
     </main>
-  )
+  );
 }
