@@ -18,8 +18,8 @@ export default function Home() {
   const [name, setName] = useState<string | null>("Your AI Mint");
   const [desc, setDesc] = useState<string | null>("Your AI Mint");
   const [metadata, setMetadata] = useState<string | null>("");
-  const [image, setImage] = useState<string | null>("./out.png");
-  const [loading, setLoading] = useState<number | null>(0);
+  const [image, setImage] = useState<string>("./out.png");
+  const [loading, setLoading] = useState<number>(0);
   const [disabled, setDisabled] = useState<boolean>(true);
   const configuration = new Configuration({
     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
@@ -120,7 +120,7 @@ export default function Home() {
               Forge
             </button>
           </div>
-          <img src={image} alt="ai-art" />
+          <img src={image!} alt="ai-art" />
         </div>
       )
       }
