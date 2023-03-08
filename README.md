@@ -1,38 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Synthart
 
-## Getting Started
+## Inspiration
 
-First, run the development server:
+The inspiration behind Synthart was to explore the potential of AI in creating unique and personalized art pieces. With the rise of NFTs and the increasing demand for digital collectables, we wanted to create a platform that could generate high-quality and one-of-a-kind images for collectors and enthusiasts.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## What it does
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Synthart is an AI image generator and NFT minter built on the Fantom Blockchain. The platform uses OpenAI's GPT-3 language model to generate abstract art pieces based on user input. The images are then minted as NFTs on the Fantom Blockchain and can be traded on various marketplaces.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How we built it
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+We built Synthart using the OpenAI API and the Fantom smart contract platform. The frontend was built using NextJS and connected to the Fantom Blockchain through ethers.js. The OpenAI API was used to generate the art pieces based on user input, and the resulting images and metadata were stored on IPFS to ensure their accessibility and security.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Challenges we ran into
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+One of the major challenges we faced was working with the OpenAI API and integrating it with the Fantom smart contract platform. We had to ensure that the generated images and metadata were securely stored on IPFS and linked to the corresponding NFTs on the Fantom Blockchain. Another challenge was optimizing the user interface and user experience to make it easy and intuitive for users to generate and mint their own NFTs.
 
-## Learn More
+## Accomplishments that we're proud of
 
-To learn more about Next.js, take a look at the following resources:
+We are proud to have built a platform that combines OpenAI's cutting-edge language model with the security and transparency of the Fantom Blockchain. We were able to successfully integrate with various NFT marketplaces, making it easy for users to buy, sell, and showcase their NFTs. We also created a unique user interface that allows users to customize their art generation process and create truly one-of-a-kind NFTs.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## What we learned
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Through building Synthart, we gained valuable experience in working with the OpenAI API, the Fantom smart contract platform, and various NFT marketplaces. We also learned about the challenges and opportunities in the emerging NFT market and the potential of AI-generated content to create new forms of value and expression.
 
-## Deploy on Vercel
+## What's next for Synthart
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+In the future, we plan to further optimize the art generation process and explore additional customization options for users. We also plan to expand our blockchain integrations and partnerships with galleries and art institutions to showcase and promote Synthart NFTs. Ultimately, we hope to continue pushing the boundaries of AI-generated art and its potential to create new forms of creativity and value.
