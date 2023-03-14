@@ -9,23 +9,35 @@ import "./globals.css";
 
 // Choose which chains you'd like to show
 
-const firechain = {
-  id: 997,
-  name: "5ire",
-  network: "5ireChain",
+const mantleChain = {
+  id: 5001,
+  name: "Mantle",
+  network: "Mantle",
+  iconUrl: "mantle_logo.png",
+  iconBackground: "#000",
   nativeCurrency: {
-    decimals: 9,
-    name: "5ire",
-    symbol: "5ire",
+    decimals: 18,
+    name: "Mantle",
+    symbol: "BIT",
   },
   rpcUrls: {
-    default: { http: ["https://rpc-testnet.5ire.network"] },
-    public: { http: ["https://rpc-testnet.5ire.network"] },
+    default: {
+      http: ["https://rpc.testnet.mantle.xyz"],
+    },
+    public: {
+      http: ["https://rpc.testnet.mantle.xyz"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Explorer Testnet",
+      url: "https://explorer.testnet.mantle.xyz",
+    },
   },
   testnet: true,
 };
 
-const chains = [firechain];
+const chains = [mantleChain];
 
 const client = createClient(
   getDefaultClient({
