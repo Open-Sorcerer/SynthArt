@@ -8,19 +8,21 @@ import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
 import ABI from "../contracts/ABI.json";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { Configuration, OpenAIApi } from "openai";
+import Link from "next/link";
 const contractAddress = "0xA4CCEb9e84b9682ca559AA41DB57f4BECe586dc5";
+// const contractAddress = "0x1a8784a45731F889D4a92258AE7E149d5C737AA1";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const { address, isConnected } = useAccount();
-
   const [name, setName] = useState<string | null>("Your AI Mint");
   const [desc, setDesc] = useState<string | null>("Your AI Mint");
   const [metadata, setMetadata] = useState<string | null>("");
-  const [image, setImage] = useState<string>("./out.png");
+  const [image, setImage] = useState<string|null>(null);
   const [loading, setLoading] = useState<number>(0);
   const [disabled, setDisabled] = useState<boolean>(true);
+  const [forged, setForged] = useState<string|null>(null);
   const configuration = new Configuration({
     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   });
@@ -40,12 +42,12 @@ export default function Home() {
       const image_url = response.data.data[0].url;
       console.log(image_url);
       setImage(image_url!);
-      setLoading(0);
       setDisabled(false);
       return image_url;
     } catch (e) {
       console.log(e);
     }
+    setForged(null);
   };
 
   const uploading = async (e: any) => {
@@ -64,7 +66,9 @@ export default function Home() {
     functionName: "safeMint",
     args: [address, metadata],
   });
-  const contractWrite = useContractWrite(prepareContractWrite.config);
+  const { data, isLoading, isSuccess, writeAsync } = useContractWrite(
+      prepareContractWrite.config
+  );
 
   const handleSendTransaction = async () => {
     var data = JSON.stringify({
@@ -78,7 +82,16 @@ export default function Home() {
     setMetadata(metadata);
     console.log(metadata);
 
-    contractWrite.write?.();
+    await writeAsync?.().then((res) => {
+      alert("Minted Successfully");
+
+      console.log(res.hash);
+      // showcase the transaction hash
+      // append the transaction hash to the url
+      // url = https://testnet.ftmscan.com/tx/${res.hash}
+      // 5ire chain URL = https://explorer.5ire.network/evm/tx/${res.hash}
+      setForged(`https://explorer.5ire.network/evm/tx/${res.hash}`);
+    });
   };
 
   return (
@@ -109,18 +122,27 @@ export default function Home() {
                 createImage();
               }}
             >
-              Generate AI Art
+              Generate {!disabled && "new"} AI Art
             </button>
             {/* <button onClick={awesome}>Tester</button> */}
-            <button
-              className="bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-lg"
-              onClick={handleSendTransaction}
-              disabled={disabled}
+            {forged?
+                <Link href={forged}>
+                <button
+                    className="bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-lg disabled:bg-gray-500"
+                >
+                  Forge
+                </button>
+                </Link>
+                :
+              <button
+                className="bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-lg disabled:bg-gray-500"
+                onClick={handleSendTransaction}
+                disabled={disabled}
             >
               Forge
-            </button>
+            </button>}
           </div>
-          <img src={image!} alt="ai-art" />
+          <img src={image||"./out.png"} onLoad={()=>setLoading(0)} alt="ai-art" />
         </div>
       )
       }
