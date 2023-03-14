@@ -64,7 +64,9 @@ export default function Home() {
     functionName: "safeMint",
     args: [address, metadata],
   });
-  const contractWrite = useContractWrite(prepareContractWrite.config);
+  const { data, isLoading, isSuccess, writeAsync } = useContractWrite(
+    prepareContractWrite.config
+  );
 
   const handleSendTransaction = async () => {
     var data = JSON.stringify({
@@ -78,7 +80,16 @@ export default function Home() {
     setMetadata(metadata);
     console.log(metadata);
 
-    contractWrite.write?.();
+    await writeAsync?.().then((res) => {
+      alert("Minted Successfully");
+
+      console.log(res.hash);
+      // showcase the transaction hash
+      // append the transaction hash to the url
+      // url = https://testnet.ftmscan.com/tx/${res.hash}
+    });
+
+    console.log(data);
   };
 
   return (
@@ -122,14 +133,13 @@ export default function Home() {
           </div>
           <img src={image!} alt="ai-art" />
         </div>
-      )
-      }
-      {loading===1 && (
+      )}
+      {loading === 1 && (
         <div className="w-1/3 h-1/3 flex justify-center items-center absolute top-1/3 left-1/3 z-10">
           <HamsterLoader loaderTitle="Forging the Image" />
         </div>
       )}
-      {loading===2 && (
+      {loading === 2 && (
         <div className="w-1/3 h-1/3 flex justify-center items-center absolute top-1/3 left-1/3 z-10">
           <HamsterLoader loaderTitle="Uploading to IPFS" />
         </div>
