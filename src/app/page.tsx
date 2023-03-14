@@ -8,7 +8,11 @@ import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
 import ABI from "../contracts/ABI.json";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { Configuration, OpenAIApi } from "openai";
-const contractAddress = "0xA4CCEb9e84b9682ca559AA41DB57f4BECe586dc5";
+const contractAddress = "0x1a8784a45731F889D4a92258AE7E149d5C737AA1"; // fantom testnet
+
+// "0xA4CCEb9e84b9682ca559AA41DB57f4BECe586dc5" // fantom testnet
+// "5ireChain" // 0x1a8784a45731F889D4a92258AE7E149d5C737AA1
+//
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -87,6 +91,7 @@ export default function Home() {
       // showcase the transaction hash
       // append the transaction hash to the url
       // url = https://testnet.ftmscan.com/tx/${res.hash}
+      // 5ire chain URL = https://explorer.5ire.network/evm/tx/${res.hash}
     });
 
     console.log(data);
