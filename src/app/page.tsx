@@ -2,7 +2,7 @@
 import HamsterLoader from "@/components/HamsterLoader";
 import SplineObject from "@/components/SplineObject";
 import { Inter } from "next/font/google";
-
+import Confetti from 'react-confetti';
 import { useState } from "react";
 import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
 import ABI from "../contracts/ABI.json";
@@ -21,6 +21,7 @@ export default function Home() {
   const [metadata, setMetadata] = useState<string | null>("");
   const [image, setImage] = useState<string|null>(null);
   const [loading, setLoading] = useState<number>(0);
+  const [explosion, setExplosion] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [forged, setForged] = useState<string|null>(null);
   const configuration = new Configuration({
@@ -43,11 +44,11 @@ export default function Home() {
       console.log(image_url);
       setImage(image_url!);
       setDisabled(false);
+      setForged(null);
       return image_url;
     } catch (e) {
       console.log(e);
     }
-    setForged(null);
   };
 
   const uploading = async (e: any) => {
@@ -91,6 +92,10 @@ export default function Home() {
       // url = https://testnet.ftmscan.com/tx/${res.hash}
       // 5ire chain URL = https://explorer.5ire.network/evm/tx/${res.hash}
       setForged(`https://explorer.5ire.network/evm/tx/${res.hash}`);
+      setExplosion(true);
+      setTimeout(function () {
+        setExplosion(false);
+      }, 5000);
     });
   };
 
@@ -126,12 +131,10 @@ export default function Home() {
             </button>
             {/* <button onClick={awesome}>Tester</button> */}
             {forged?
-                <Link href={forged}>
-                <button
-                    className="bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-lg disabled:bg-gray-500"
-                >
-                  Forge
-                </button>
+                <Link href={forged!}>
+                <div className="bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-lg disabled:bg-gray-500 flex justify-center">
+                  View on Block Explorer
+                </div>
                 </Link>
                 :
               <button
@@ -156,6 +159,9 @@ export default function Home() {
           <HamsterLoader loaderTitle="Uploading to IPFS" />
         </div>
       )}
+      {explosion &&
+            <Confetti className="fullscreen"/>
+      }
     </div>
   );
 }
