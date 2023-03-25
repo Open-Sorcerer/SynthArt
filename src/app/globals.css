@@ -109,3 +109,11 @@ a {
     color-scheme: dark;
   }
 }
+
+.fullscreen{
+  position:fixed;
+  z-index: 13;
+  height: 200vh;
+  width: 96vw;
+  margin: 0 2vw;
+}
